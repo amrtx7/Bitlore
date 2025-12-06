@@ -1,0 +1,109 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+<div class="main">
+    <div class="blogForm">
+
+        <form>
+            <input type="text" name="title" id="title" placeholder="Title* (Maximum length is 50 characters)">
+            <div class="title-input-error"></div>
+            <input type="text" name="description" id="description" placeholder="Description* (Maximum length is 80 characters)">
+            <div class="desc-input-error"></div>
+            <textarea name="content" id="content" placeholder="Write your blog* (Maximum length is 500 characters)"></textarea>
+            <div class="content-input-error"></div>
+            <input class="btn" type="submit" value="Post">
+        </form>
+    </div>
+</div>
+
+<%- include('partials/footer') %>
+
+<script>
+    const form = document.querySelector("form")
+    const titleInputError = document.querySelector("form div:nth-of-type(1)")
+    let titleCharCount = 0
+    const descInputError = document.querySelector("form div:nth-of-type(2)")
+    let descCharCount = 0
+    const contentInputError = document.querySelector("form div:nth-of-type(3)")
+    let contentCharCount = 0
+    
+    form.addEventListener('submit', async (e)=>{
+        e.preventDefault()
+        const titleInput = document.querySelector("form input:nth-of-type(1)")//50
+        const descInput = document.querySelector("form input:nth-of-type(2)")//100
+        const contentInput = document.querySelector("form textarea")//50
+        titleCharCount = titleInput.value.length
+        descCharCount = descInput.value.length
+        contentCharCount = contentInput.value.length
+        // console.log(titleCharCount,descCharCount,contentCharCount)
+
+
+        if(titleCharCount==0){
+            titleInputError.innerHTML = "Title cannot be empty"
+        }else if(titleCharCount>50){
+            titleInputError.innerHTML = "Maximum characters allowed is 50"
+        }
+        else{
+            titleInputError.innerHTML = ""
+        }
+
+
+        if(descCharCount==0){
+            descInputError.innerHTML = "Description cannot be empty"
+        }else if(descCharCount>80){
+            descInputError.innerHTML = "Maximum characters allowed is 80"
+        }
+        else{
+            descInputError.innerHTML = ""
+        }
+
+
+        if(contentCharCount==0){
+            contentInputError.innerHTML = "Content cannot be empty"
+        }else if(contentCharCount>500){
+            contentInputError.innerHTML = "Maximum characters allowed is 500"
+        }
+        else{
+            contentInputError.innerHTML = ""
+        }
+
+
+        // Only proceed if all validations pass
+        if(titleCharCount > 0 && titleCharCount <= 50 && 
+           descCharCount > 0 && descCharCount <= 80 && 
+           contentCharCount > 0 && contentCharCount <= 500) {
+            
+            try {
+                const response = await fetch('/<%= user._id %>/write', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        title: titleInput.value,
+                        description: descInput.value,
+                        content: contentInput.value
+                    })
+                });
+                
+                if (response.ok) {
+                    // Handle successful submission
+                    alert('Blog posted successfully!');
+                    form.reset();
+                } else {
+                    // Handle server errors
+                    alert('Failed to post blog. Please try again.');
+                }
+            } catch (err) {
+                console.error('Error posting blog:', err);
+                alert('An error occurred while posting the blog.');
+            }
+        }
+
+
+
+
+    })
+
+
+
+</script>

@@ -1,0 +1,53 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+        <div class="main">
+            <div class="container">
+                <form>
+                    <p>New to MyBlogs?</p>
+                    <p>Register yourself</p>
+                    <input type="text" name="name" placeholder="username">
+                    <div class="error name-error"></div>
+                    <input type="text" name="email" placeholder="email">
+                    <div class="error email-error"></div>
+                    <input type="text" name="password" placeholder="password">
+                    <div class="error password-error"></div>
+                    <input type="submit" value="Sign Up">
+                </form>
+            </div>
+        </div>
+<%- include('partials/footer') %>
+<script>
+
+    const form = document.querySelector("form")
+
+    form.addEventListener('submit',async (e)=>{
+        event.preventDefault(e)
+        const name = form.name.value
+        const email = form.email.value
+        const nameErr = document.querySelector(".error.name-error")
+        const emailErr = document.querySelector(".error.email-error")
+        const passwordErr = document.querySelector(".error.password-error")
+        const password = form.password.value
+        try {
+
+            const user = await fetch('/auth/signup',{
+                method:'POST',
+                headers:{"Content-Type":"application/json"},
+                body: JSON.stringify({
+                    name,email,password
+                })
+            })
+            const data = await user.json()
+            if(data.errors){
+                console.log(data)
+                nameErr.innerHTML = data.errors.name
+                emailErr.innerHTML = data.errors.email
+                passwordErr.innerHTML = data.errors.password
+            }else{
+                location.assign('/')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    })
+</script>

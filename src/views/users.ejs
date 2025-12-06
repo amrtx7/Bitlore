@@ -1,0 +1,13 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+<div class="user-main" style="background-color:rgb(207, 255, 207)">
+    <h1>Users</h1>
+    <% users.forEach(user => { %>
+    <div class="users-container" style="border: 1px solid black;margin:10px">
+            <p><%= user.name %></p>
+            <p><%= user.email %></p>
+            <p><%= user.password %></p>
+        </div>
+        <% }) %>
+</div>
+<%- include('partials/footer') %>

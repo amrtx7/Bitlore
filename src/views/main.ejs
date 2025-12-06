@@ -1,0 +1,38 @@
+<%- include('partials/header') %>
+    <%- include('partials/nav') %>
+<%- include('partials/greetings') %>
+
+
+        <div class="main">
+            <div class="container">
+                <% console.log('User in nav:', user) %>
+                <% if (user) { %>
+                    <div class="box1">
+                        <p>Write your blog now!</p>
+                        <button><a href="/<%= user._id %>/write">Write</a></button>
+                    </div>
+                        <div class="blogs">
+                            <h3>Explore more blogs</h3>
+                            <ul>
+                                <li class="blog">Blog 1</li>
+                                <li class="blog">Blog 2</li>
+                                <li class="blog">Blog 3</li>
+                                <li class="blog">Blog 4</li>
+                                <li class="blog">Blog 1</li>
+                                <li class="blog">Blog 2</li>
+                                <li class="blog">Blog 3</li>
+                                <li class="blog">Blog 4</li>
+                                <li class="blog">Blog 1</li>
+                                <li class="blog">Blog 2</li>
+                                <li class="blog">Blog 3</li>
+                                <li class="blog">Blog 4</li>
+                            </ul>
+                        </div>
+                    <% } else {%>
+                        <h3>Getting a thought? Write it down now!</h3>
+                        <a href="/auth/login">Get Started</a>
+                <%} %>
+            </div>
+        </div>
+
+        <%- include('partials/footer') %>

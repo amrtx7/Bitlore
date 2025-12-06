@@ -1,0 +1,20 @@
+
+    <nav>
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/blogs">My Blogs</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/contacts">Contact</a></li>
+        <li><a href="/users">Users</a></li>
+    </ul>
+    <ul>
+        <!-- <% console.log('User in nav:', user) %> -->
+        <% if (user) { %>
+            <li><a href="/auth/logout">Logout</a></li>
+            <% } else {%>
+                <li><a href="/auth/signup">Sign Up</a></li>
+                <li><a href="/auth/login">Log In</a></li>
+        <%} %>
+         
+    </ul>
+</nav>
