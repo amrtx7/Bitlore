@@ -1,8 +1,8 @@
 const express = require("express")
 const app = express()
 const dotenv = require('dotenv')
-const cookieParser = require('cookie-parser')
 dotenv.config()
+const cookieParser = require('cookie-parser')
 
 const dbConnect = require('./config/dbConnection')
 dbConnect()
@@ -29,5 +29,6 @@ app.use(navRoutes)
 PORT = process.env.PORT || 3001
 
 app.listen(process.env.PORT,()=>{
+    console.log(process.env)
     console.log("Server is running at port",process.env.PORT)
 })
