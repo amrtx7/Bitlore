@@ -15,14 +15,14 @@ module.exports.login_get = (req,res)=>{
 }
 module.exports.signup_post = async (req,res)=>{
     let {name,email,password} = req.body
-
+    console.log("SIGNUP BODY =>", req.body);
     try {
         const user = new User({
             name,
             email,
             password
         })
-        
+        console.log("signup post me agya")
         await user.save()
         console.log(user,"\nadded to db\n")
         // creating to token to store in cookies

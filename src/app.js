@@ -29,6 +29,5 @@ app.use(navRoutes)
 PORT = process.env.PORT || 3001
 
 app.listen(process.env.PORT,()=>{
-    console.log(process.env)
     console.log("Server is running at port",process.env.PORT)
 })

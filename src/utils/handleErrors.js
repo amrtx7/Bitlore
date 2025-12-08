@@ -1,5 +1,6 @@
 const handleErrors = (err,res)=>{
     let errors = {name:"",email:"",password:""}
+    console.log("Handle errors me agaya")
     console.log(err)
 
     //for login
@@ -20,7 +21,7 @@ const handleErrors = (err,res)=>{
     }
 
 
-    
+    console.log(err.code)
     if(err.code===11000){  
         errors.email = `Email : ${err.keyValue.email} is already registered`
     }
