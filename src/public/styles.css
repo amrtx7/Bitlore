@@ -30,7 +30,7 @@ nav ul li a{
     text-decoration: none;
     color:black;
     outline: none;
-    background-color: rgb(205, 114, 114);
+    /* background-color: rgb(205, 114, 114); */
     padding:2px 7px;
     border-radius: 10px;
 }
@@ -51,6 +51,9 @@ a{
     justify-content: center;
     text-align: center;
     background-color:#fff;
+}
+.error-test{
+    color:red;
 }
 .box1{
     display: flex;
@@ -102,7 +105,7 @@ a{
 .btn{
     width: 80px;
     border: none;
-    background-color:rgb(102, 255, 140) ;
+    background-color: rgb(205, 114, 114);
     padding: 4px;
     border-radius: 9px;
     cursor: pointer;
