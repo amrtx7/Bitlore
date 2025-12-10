@@ -25,7 +25,8 @@ const authRoutes = require("./routes/authRoutes")
 app.use(authRoutes)
 const navRoutes = require("./routes/navRoutes")
 app.use(navRoutes)
-
+const blogRoutes = require("./routes/blogRoutes")
+app.use(blogRoutes)
 PORT = process.env.PORT || 3001
 
 app.listen(process.env.PORT,()=>{

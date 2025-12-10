@@ -1,6 +1,6 @@
 const handleErrors = (err,res)=>{
     let errors = {name:"",email:"",password:""}
-    console.log("Handle errors me agaya")
+    console.log("handleErrors me agaya means auth me kuch toh hua h!!!\n")
     console.log(err)
 
     //for login

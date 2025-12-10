@@ -16,38 +16,39 @@
 
 <script>
     const form = document.querySelector("form")
-    const titleInputError = document.querySelector("form div:nth-of-type(1)")
+    const titleInputError = document.querySelector(".title-input-error")
     titleInputError.style.color = 'red'
     let titleCharCount = 0
-    const contentInputError = document.querySelector("form div:nth-of-type(3)")
+    const contentInputError = document.querySelector(".content-input-error")
     contentInputError.style.color = 'red'
     let contentCharCount = 0
     
     form.addEventListener('submit', async (e)=>{
         e.preventDefault()
-        const titleInput = document.querySelector("form input:nth-of-type(1)")//50
-        const contentInput = document.querySelector("form textarea")//50
+        const titleInput = document.querySelector("#title")//50
+        const contentInput = document.querySelector("#content")//50
         titleCharCount = titleInput.value.length
         contentCharCount = contentInput.value.length
         // console.log(titleCharCount,descCharCount,contentCharCount)
 
 
-        if(titleCharCount==0){
-            titleInputError.innerHTML = "Title cannot be empty"
-        }else if(titleCharCount>50){
-            titleInputError.innerHTML = "Maximum characters allowed is 50"
-        }
+        // if(titleCharCount==0){
+        //     titleInputError.innerHTML = "Title cannot be empty"
+        // }else if(titleCharCount>50){
+        //     titleInputError.innerHTML = "Maximum characters allowed is 50"
+        // }
 
-        if(contentCharCount==0){
-            contentInputError.innerHTML = "Content cannot be empty"
-        }else if(contentCharCount>500){
-            contentInputError.innerHTML = "Maximum characters allowed is 500"
-        }
+        // if(contentCharCount==0){
+        //     contentInputError.innerHTML = "Content cannot be empty"
+        // }else if(contentCharCount>500){
+        //     contentInputError.innerHTML = "Maximum characters allowed is 500"
+        // }
 
 
         // Only proceed if all validations pass
-        if(titleCharCount > 0 && titleCharCount <= 50 && 
-           contentCharCount > 0 && contentCharCount <= 500) {
+        // if(titleCharCount > 0 && titleCharCount <= 50 && 
+        //    contentCharCount > 0 && contentCharCount <= 500) {
+        // }
             
             try {
                 const response = await fetch('/<%= user._id %>/write', {
@@ -56,12 +57,13 @@
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify({
-                        title: titleInput.value,
-                        content: contentInput.value
+                        title: titleInput.value.trim(),
+                        content: contentInput.value.trim()
                     })
                 });
-                console.log(response)
-                if (response.ok) {
+                const data = await response.json()
+                console.log(data)
+                if (data.success) {
                     // Handle successful submission
                     alert('Blog posted successfully!');
                     form.reset();
@@ -73,7 +75,6 @@
                 console.error('Error posting blog:', err);
                 alert('An error occurred while posting the blog.');
             }
-        }
 
 
 
