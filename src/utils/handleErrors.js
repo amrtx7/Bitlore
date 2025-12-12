@@ -1,4 +1,4 @@
-const handleErrors = (err,res)=>{
+module.exports.handleErrors = (err,res)=>{
     let errors = {name:"",email:"",password:""}
     console.log("handleErrors me agaya means auth me kuch toh hua h!!!\n")
     console.log(err)
@@ -33,4 +33,31 @@ const handleErrors = (err,res)=>{
     }
     res.status(400).json({errors})
 }
-module.exports = handleErrors
+module.exports.handleBlogErrors = (res,err)=>{
+    let errors = {
+        success:false,
+        empty:"",
+        limit:{
+            title:"",
+            content:"",
+        },
+        auth:""
+    }
+    if(err.reason == "empty"){
+        errors.empty = "Both Title and Content are required fields!"
+    }
+    if(err.limitExceeded){
+        if(err.title){
+            errors.limit.title = "Title should not be more than 50 chars"
+        }else{
+            errors.limit.content = "Content should not be more than 200 chars"
+        }
+    }
+    if(err.user=="null"){
+        errors.auth = "User not authenticated"
+    }
+    console.log("handleBlogError invoked...\n")
+    console.log(errors);
+    console.log("_______________________________________________")
+    return res.status(400).json({errors})
+}

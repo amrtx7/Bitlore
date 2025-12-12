@@ -7,6 +7,7 @@
             <div class="error-text title-input-error"></div>
             <textarea name="content" id="content" placeholder="Write your blog* (Maximum length is 500 characters)"></textarea>
             <div class="error-text content-input-error"></div>
+            <div class="common-error-box"></div>
             <input class="btn" type="submit" value="Post">
         </form>
     </div>
@@ -18,17 +19,15 @@
     const form = document.querySelector("form")
     const titleInputError = document.querySelector(".title-input-error")
     titleInputError.style.color = 'red'
-    let titleCharCount = 0
     const contentInputError = document.querySelector(".content-input-error")
     contentInputError.style.color = 'red'
-    let contentCharCount = 0
+    const errorBox = document.querySelector(".common-error-box")
+    errorBox.style.color = 'red'
     
     form.addEventListener('submit', async (e)=>{
         e.preventDefault()
         const titleInput = document.querySelector("#title")//50
-        const contentInput = document.querySelector("#content")//50
-        titleCharCount = titleInput.value.length
-        contentCharCount = contentInput.value.length
+        const contentInput = document.querySelector("#content")//200
         // console.log(titleCharCount,descCharCount,contentCharCount)
 
 
@@ -69,11 +68,14 @@
                     form.reset();
                 } else {
                     // Handle server errors
-                    alert('Failed to post blog. Please try again.');
+                    errorBox.innerHTML = data.errors.empty;
+                    titleInputError.innerHTML = data.errors.limit.title;
+                    contentInputError.innerHTML = data.errors.limit.content;
+                    console.log(data)
                 }
             } catch (err) {
                 console.error('Error posting blog:', err);
-                alert('An error occurred while posting the blog.');
+                // alert('An error occurred while posting the blog.');
             }
 
 

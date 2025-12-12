@@ -37,7 +37,6 @@ const checkUser = async (req,res,next)=>{
             return next()
         }
     }
-    
-
 }
+
 module.exports = {requireAuth,checkUser}
