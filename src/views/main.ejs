@@ -14,18 +14,14 @@
                         <div class="blogs">
                             <h3>Explore more blogs</h3>
                             <ul>
-                                <li class="blog">Blog 1</li>
-                                <li class="blog">Blog 2</li>
-                                <li class="blog">Blog 3</li>
-                                <li class="blog">Blog 4</li>
-                                <li class="blog">Blog 1</li>
-                                <li class="blog">Blog 2</li>
-                                <li class="blog">Blog 3</li>
-                                <li class="blog">Blog 4</li>
-                                <li class="blog">Blog 1</li>
-                                <li class="blog">Blog 2</li>
-                                <li class="blog">Blog 3</li>
-                                <li class="blog">Blog 4</li>
+                                <% blogs.forEach(blog => { %>
+                                    <li class="blog-card"> 
+                                        <a href="/blog/<%= blog.slug %>/<%= blog.author.toString() %>"><%= blog.title %></a>
+                                        <a href="/"></a>
+                                        //we have to add author link, and much more
+
+                                    </li>
+                                <% }); %>
                             </ul>
                         </div>
                     <% } else {%>

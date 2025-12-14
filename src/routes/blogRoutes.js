@@ -4,9 +4,9 @@ const {requireAuth,checkUser} = require("../middlewares/authMiddleware")
 const {protectedRoute} = require("../middlewares/blogMiddleware")
 const blogController = require("../controllers/blogController")
 
-router.get('/blogs',requireAuth,blogController.getBlogs)
-router.get('/:userid/write',checkUser,blogController.getWriteBlogs)
-router.post('/:userid/write',checkUser,protectedRoute,blogController.postWriteBlogs)
-router.use('/:slug',protectedRoute)
+router.get('/myblogs',checkUser,requireAuth,blogController.getUserBlogs)
+router.get('/:userid/write',checkUser,requireAuth,protectedRoute,blogController.getWriteBlogs)
+router.post('/:userid/write',checkUser,requireAuth,protectedRoute,blogController.postWriteBlogs)
+// router.use('/:slug',protectedRoute)
 
 module.exports = router

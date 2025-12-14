@@ -27,6 +27,11 @@ const navRoutes = require("./routes/navRoutes")
 app.use(navRoutes)
 const blogRoutes = require("./routes/blogRoutes")
 app.use(blogRoutes)
+
+app.use('/:slug',(req,res,next)=>{
+    res.render('forbidden')
+}) 
+
 PORT = process.env.PORT || 3001
 
 app.listen(process.env.PORT,()=>{

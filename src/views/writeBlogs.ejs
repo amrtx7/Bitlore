@@ -65,7 +65,7 @@
                 if (data.success) {
                     // Handle successful submission
                     alert('Blog posted successfully!');
-                    form.reset();
+                    location.assign('/')
                 } else {
                     // Handle server errors
                     errorBox.innerHTML = data.errors.empty;

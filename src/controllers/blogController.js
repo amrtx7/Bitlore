@@ -3,9 +3,10 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const { handleBlogErrors } = require('../utils/handleErrors')
 
-module.exports.getBlogs = (req,res)=>{
-    res.render("blogs")
+module.exports.getUserBlogs = async (req,res)=>{
+    res.render("blogs",)
 }
+
 module.exports.getWriteBlogs = (req,res)=>{
     res.render("writeBlogs")
 }
@@ -29,7 +30,7 @@ module.exports.postWriteBlogs = async (req,res)=>{
                 content:false
             }
         }
-        if(content.length>50){
+        if(content.length>200){
             throw{
                 user:user.name,
                 limitExceeded:true,
@@ -41,34 +42,22 @@ module.exports.postWriteBlogs = async (req,res)=>{
         // Get authenticated user from res.locals (set by checkUser middleware)
 
         console.log("blog by : ",user.name,"\n");
-        // return res.status(200).json({success:true,message:null})
-        
-        //its not possible that ur in blog page and not a user
-        // if(!user){
-        //     return res.status(401).json({ 
-        //         success: false, 
-        //         message: 'User not authenticated. Please login to post a blog.' 
-        //     })
-        // }   
-        
-        // Verify user ID matches route parameter (security check)
         const userId = req.params.userid
         if(userId !== user._id.toString()){
             throw {
                 user:"null"
-                // message:"Unauthorized user. Login first!"
             }
         }
         
         // Create and save blog
-        // const blog = new Blogs({
-        //     title: title.trim(),
-        //     content: content.trim(),
-        //     author: user._id,
-        //     slug:""
-        // })
+        const blog = new Blogs({
+            title: title.trim(),
+            content: content.trim(),
+            author: user._id,
+            slug:""
+        })
         
-        // await blog.save()
+        await blog.save()
         
         res.status(201).json({ 
             success: true, 
