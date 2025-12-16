@@ -1,0 +1,39 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+
+ <div class="main">
+            <div class="container">
+                <div class="profile-page">
+                    <h2>Profile Page</h2>
+                    <h1>Username : <%= profile.username %></h1>
+                    <h1>Name : <%= profile.name %></h1>
+                </div>
+                 <% if (blogs.length === 0) { %>
+                    <h2>No blogs posted.</h2>
+                    <a href="/write/<%= user._id %>"></a>
+                <% } else { %>
+                 <h2>Featured blogs</h2>
+
+                <ul>
+                    <% blogs.forEach(blog=> { %>
+                        <li class="blog-card">
+                            <a id="title" href="/blogs/<%= blog.slug %>">
+                                <%= blog.title %>
+                            </a>
+                            <p id="desc">
+                                <%= blog.content %>
+                            </p>
+                            <a id="author" href="/author/<%= blog.author.id %>">
+                                <%= blog.author.name %> | <%= blog.createdAt.toString().split(" ").slice(1,4).join("-") %>
+                            </a>
+                            <!-- //we have to add author link, and much more -->
+
+                        </li>
+                        <% }); %>
+                </ul>
+                <% } %>
+            </div>
+        </div>
+
+<%- include('partials/footer') %>

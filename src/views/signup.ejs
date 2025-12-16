@@ -23,7 +23,7 @@
     const form = document.querySelector("form")
 
     form.addEventListener('submit',async (e)=>{
-        event.preventDefault(e)
+        e.preventDefault()
         const username = form.username.value
         const name = form.name.value
         const email = form.email.value

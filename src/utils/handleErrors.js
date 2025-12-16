@@ -1,8 +1,7 @@
 module.exports.handleErrors = (err,res)=>{
     let errors = {username:"",name:"",email:"",password:""}
     console.log("handleErrors me agaya means auth me kuch toh hua h!!!\n")
-    console.log(err)
-
+    
     //for login
     if(err.message==="Email cannot be empty"){
         errors.email = "Email cannot be empty"
@@ -19,15 +18,20 @@ module.exports.handleErrors = (err,res)=>{
     if(err.message === "User is not registered"){
         errors.email = "User is not registered"
     }
-
-
-    if(err.keyValue.email){  
-        errors.email = `Email : ${err.keyValue.email} is already registered`
-    }
-    if(err.keyValue.username){  
-        errors.username = `Username : ${err.keyValue.username} is already registered`
-    }
     
+    if(err.keyValue){
+        if(err.keyValue.email){  
+            errors.email = `Email : ${err.keyValue.email} is already registered`
+        }
+        if(err.keyValue.username){  
+            errors.username = `Username : ${err.keyValue.username} is already registered`
+        }
+    }
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    console.log(err.message)
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+    console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     if(err.message.includes("user validation failed")){
         Object.values(err.errors).forEach((error)=>{
             errors[error.path] = error.message
@@ -50,9 +54,9 @@ module.exports.handleBlogErrors = (res,err)=>{
     }
     if(err.limitExceeded){
         if(err.title){
-            errors.limit.title = "Title should not be more than 50 chars"
+            errors.limit.title = "Title should not be more than 100 chars"
         }else{
-            errors.limit.content = "Content should not be more than 500 chars"
+            errors.limit.content = "Content should not be more than 1000 chars"
         }
     }
     if(err.user=="null"){

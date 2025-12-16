@@ -12,8 +12,8 @@ const requireAuth = (req,res,next)=>{
                 console.log(err)
                 return res.redirect('/auth/login')
             }else{
-                console.log("Authenticated")
-                console.log('User permission granted',decoded)
+                // console.log("Authenticated")
+                // console.log('User permission granted',decoded) for debugginf purpose
                 next()
             }
         })

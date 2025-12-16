@@ -6,8 +6,8 @@ const { handleBlogErrors } = require('../utils/handleErrors')
 module.exports.getUserBlogs = async (req,res)=>{
     const userId = res.locals.user._id.toString()
     const blogs = await Blogs.find({ author:userId }).sort({createdAt:-1}).populate('author')
-    console.log("User blogs\n")
-    console.log(blogs)
+    // console.log("User blogs\n")   for debugging purpose
+    // console.log(blogs)
     res.render("blogs",{blogs})
 }
 
@@ -18,7 +18,7 @@ module.exports.postWriteBlogs = async (req,res)=>{
     try {
         const user = res.locals.user
         const {title, content} = req.body
-        console.log("\n",title, content,"\n")
+        // console.log("\n",title, content,"\n")  for debugging purpose
         // Validate input
         if(!title || !content){
             throw {
@@ -26,7 +26,7 @@ module.exports.postWriteBlogs = async (req,res)=>{
                 reason:"empty"
             }
         }
-        if(title.length>50){
+        if(title.length>100){
             throw{
                 user:user.name,
                 limitExceeded:true,
@@ -34,7 +34,7 @@ module.exports.postWriteBlogs = async (req,res)=>{
                 content:false
             }
         }
-        if(content.length>500){
+        if(content.length>1000){
             throw{
                 user:user.name,
                 limitExceeded:true,
@@ -45,7 +45,7 @@ module.exports.postWriteBlogs = async (req,res)=>{
         
         // Get authenticated user from res.locals (set by checkUser middleware)
 
-        console.log("blog by : ",user.name,"\n");
+        // console.log("blog by : ",user.name,"\n"); for debugging purpose
         const userId = req.params.userid
         if(userId !== user._id.toString()){
             throw {
@@ -76,6 +76,6 @@ module.exports.getBlog = async(req,res)=>{
     console.log("in getblog controller\n")
     const blogName = req.params.blogName
     const blog = await Blogs.findOne({slug:blogName}).populate('author')
-    console.log(blog)
+    // console.log(blog) for debugging putpose
     res.render('blogPage' , {blog})
 }
