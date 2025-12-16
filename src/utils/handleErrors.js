@@ -1,5 +1,5 @@
 module.exports.handleErrors = (err,res)=>{
-    let errors = {name:"",email:"",password:""}
+    let errors = {username:"",name:"",email:"",password:""}
     console.log("handleErrors me agaya means auth me kuch toh hua h!!!\n")
     console.log(err)
 
@@ -21,9 +21,11 @@ module.exports.handleErrors = (err,res)=>{
     }
 
 
-    console.log(err.code)
-    if(err.code===11000){  
+    if(err.keyValue.email){  
         errors.email = `Email : ${err.keyValue.email} is already registered`
+    }
+    if(err.keyValue.username){  
+        errors.username = `Username : ${err.keyValue.username} is already registered`
     }
     
     if(err.message.includes("user validation failed")){
@@ -50,7 +52,7 @@ module.exports.handleBlogErrors = (res,err)=>{
         if(err.title){
             errors.limit.title = "Title should not be more than 50 chars"
         }else{
-            errors.limit.content = "Content should not be more than 200 chars"
+            errors.limit.content = "Content should not be more than 500 chars"
         }
     }
     if(err.user=="null"){

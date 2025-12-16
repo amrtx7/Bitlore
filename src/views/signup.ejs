@@ -5,7 +5,9 @@
                 <form>
                     <p>New to MyBlogs?</p>
                     <p>Register yourself</p>
-                    <input type="text" name="name" placeholder="username">
+                    <input type="text" name="username" placeholder="username">
+                    <div class="error username-error"></div>
+                    <input type="text" name="name" placeholder="Full Name">
                     <div class="error name-error"></div>
                     <input type="text" name="email" placeholder="email">
                     <div class="error email-error"></div>
@@ -22,24 +24,27 @@
 
     form.addEventListener('submit',async (e)=>{
         event.preventDefault(e)
+        const username = form.username.value
         const name = form.name.value
         const email = form.email.value
+        const password = form.password.value
+        const usernameErr = document.querySelector(".error.username-error")
         const nameErr = document.querySelector(".error.name-error")
         const emailErr = document.querySelector(".error.email-error")
         const passwordErr = document.querySelector(".error.password-error")
-        const password = form.password.value
         try {
 
             const user = await fetch('/auth/signup',{
                 method:'POST',
                 headers:{"Content-Type":"application/json"},
                 body: JSON.stringify({
-                    name,email,password
+                    username,name,email,password
                 })
             })
             const data = await user.json()
             if(data.errors){
                 console.log(data)
+                usernameErr.innerHTML = data.errors.username
                 nameErr.innerHTML = data.errors.name
                 emailErr.innerHTML = data.errors.email
                 passwordErr.innerHTML = data.errors.password

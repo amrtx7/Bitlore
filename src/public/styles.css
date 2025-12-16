@@ -64,6 +64,28 @@ a{
     display: flex;
     flex-direction: column;
     margin-top: 15px;
+    gap:20px;
+}
+.blog-card{
+    border:1px solid black;
+    margin:9px 0;
+    padding:10px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    align-items:flex-start;
+}
+.blog-card #title{
+    font-size: 30px;
+    font-weight: 700;
+}
+.blog-card #desc{
+    font-size: 14px;
+    font-weight: 500;
+}
+.blog-card #author{
+    font-size: 12px;
+    font-weight: 400;
 }
 .blog{
     list-style-type: none;

@@ -2,7 +2,7 @@ const User = require("../models/user")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const { isEmail } = require('validator')
-const handleErrors = require("../utils/handleErrors")
+const {handleErrors} = require("../utils/handleErrors")
 
 const maxAge = 3*24*60*60
 const maxAge_sec = maxAge*1000
@@ -14,10 +14,11 @@ module.exports.login_get = (req,res)=>{
     res.render("login")
 }
 module.exports.signup_post = async (req,res)=>{
-    let {name,email,password} = req.body
+    let {username,name,email,password} = req.body
     console.log("SIGNUP BODY =>", req.body);
     try {
         const user = new User({
+            username,
             name,
             email,
             password

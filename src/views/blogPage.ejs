@@ -1,0 +1,16 @@
+<%- include('partials/header') %>
+<%- include('partials/nav') %>
+
+
+ <div class="main">
+            <div class="container">
+                <div class="blog-page">
+                    <h1><%= blog.title %></h1>
+                    <p><%= blog.author.name %></p>
+                    <p><%= blog.createdAt.toString().split(" ").slice(1,4).join(" ") %></p>
+                    <p><%= blog.content %></p>
+                </div>
+            </div>
+        </div>
+
+<%- include('partials/footer') %>

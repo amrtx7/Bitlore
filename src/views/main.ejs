@@ -1,6 +1,6 @@
 <%- include('partials/header') %>
     <%- include('partials/nav') %>
-<%- include('partials/greetings') %>
+<!-- <%- include('partials/greetings') %> -->
 
 
         <div class="main">
@@ -16,9 +16,10 @@
                             <ul>
                                 <% blogs.forEach(blog => { %>
                                     <li class="blog-card"> 
-                                        <a href="/blog/<%= blog.slug %>/<%= blog.author.toString() %>"><%= blog.title %></a>
-                                        <a href="/"></a>
-                                        //we have to add author link, and much more
+                                        <a id="title" href="/blogs/<%= blog.slug %>"><%= blog.title %></a>
+                                        <p id="desc"><%= blog.content %></p>
+                                        <a id="author" href="/author/<%= blog.author.id %>"><%= blog.author.name %> | <%= blog.createdAt.toString().split(" ").splice(1,3).join(" ") %></a>
+                                        <!-- //we have to add author link, and much more -->
 
                                     </li>
                                 <% }); %>

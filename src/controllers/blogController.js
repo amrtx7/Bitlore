@@ -4,7 +4,11 @@ const User = require('../models/user')
 const { handleBlogErrors } = require('../utils/handleErrors')
 
 module.exports.getUserBlogs = async (req,res)=>{
-    res.render("blogs",)
+    const userId = res.locals.user._id.toString()
+    const blogs = await Blogs.find({ author:userId }).sort({createdAt:-1}).populate('author')
+    console.log("User blogs\n")
+    console.log(blogs)
+    res.render("blogs",{blogs})
 }
 
 module.exports.getWriteBlogs = (req,res)=>{
@@ -30,7 +34,7 @@ module.exports.postWriteBlogs = async (req,res)=>{
                 content:false
             }
         }
-        if(content.length>200){
+        if(content.length>500){
             throw{
                 user:user.name,
                 limitExceeded:true,
@@ -67,4 +71,11 @@ module.exports.postWriteBlogs = async (req,res)=>{
         console.error('Error posting blog:', err,"\n")
         handleBlogErrors(res,err)
     }
+}
+module.exports.getBlog = async(req,res)=>{
+    console.log("in getblog controller\n")
+    const blogName = req.params.blogName
+    const blog = await Blogs.findOne({slug:blogName}).populate('author')
+    console.log(blog)
+    res.render('blogPage' , {blog})
 }
