@@ -24,6 +24,11 @@ const userSchema = new mongoose.Schema({
         required:[true,"Password is required"],
         minlength:[8,"Password must be at least 8 characters long"]
         //validation expected soon
+    },
+    role:{
+        type:String,
+        enum:["user","admin"],
+        default:"user"
     }
 })
 
@@ -34,3 +39,21 @@ userSchema.pre("save",async function(){
 })
 
 module.exports = mongoose.model('user',userSchema)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//just added roles in documents, controller, middleware all pending
