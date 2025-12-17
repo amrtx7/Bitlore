@@ -1,39 +1,101 @@
 <%- include('partials/header') %>
-<%- include('partials/nav') %>
+    <%- include('partials/nav') %>
 
 
- <div class="main">
+        <div class="main">
             <div class="container">
                 <div class="profile-page">
                     <h2>Profile Page</h2>
-                    <h1>Username : <%= profile.username %></h1>
-                    <h1>Name : <%= profile.name %></h1>
+                    <h1>Username : <%= profile.username %>
+                    </h1>
+                    <h1>Name : <%= profile.name %>
+                    </h1>
                 </div>
-                 <% if (blogs.length === 0) { %>
+                <% if (blogs.length===0) { %>
                     <h2>No blogs posted.</h2>
                     <a href="/write/<%= user._id %>"></a>
-                <% } else { %>
-                 <h2>Featured blogs</h2>
+                    <% } else { %>
+                        <h2>Featured blogs</h2>
 
-                <ul>
-                    <% blogs.forEach(blog=> { %>
-                        <li class="blog-card">
-                            <a id="title" href="/blogs/<%= blog.slug %>">
-                                <%= blog.title %>
-                            </a>
-                            <p id="desc">
-                                <%= blog.content %>
-                            </p>
-                            <a id="author" href="/author/<%= blog.author.id %>">
-                                <%= blog.author.name %> | <%= blog.createdAt.toString().split(" ").slice(1,4).join("-") %>
-                            </a>
-                            <!-- //we have to add author link, and much more -->
+                        <ul id="blog-list">
+                            <% blogs.forEach(blog=> { %>
+                                <li class="blog-card">
+                                    <a id="title" href="/blogs/<%= blog.slug %>">
+                                        <%= blog.title %>
+                                    </a>
+                                    <p id="desc">
+                                        <%= blog.content %>
+                                    </p>
+                                    <a id="author" href="/author/<%= blog.author.id %>">
+                                        <%= blog.author.name %> | <%=
+                                                blog.createdAt.toString().split(" ").slice(1,4).join(" -") %>
+                                    </a>
+                                    <button class="delBtn" data-blog-id="<%= blog._id %>"
+                                        data-blog-name="<%= blog.title %>">Delete</button>
 
-                        </li>
-                        <% }); %>
-                </ul>
-                <% } %>
+                                </li>
+                                <% }); %>
+                        </ul>
+                        <% } %>
             </div>
         </div>
 
-<%- include('partials/footer') %>
+        <%- include('partials/footer') %>
+
+            <script>
+                const blogList = document.querySelector('#blog-list')
+                if(blogList){
+                    blogList.addEventListener('click',(event)=>{
+                        if(!event.target.classList.contains('delBtn')){
+                            return
+                        }
+                        const blogId = event.target.dataset.blogId
+                        const blogName = event.target.dataset.blogName
+                        if(confirm('Do you want to delete this blog?')){
+                            deleteBlog(blogId,blogName)
+                            event.target.closest('li').remove()
+                        }
+                    })
+                }
+
+                const deleteBlog = async(blogId,blogName)=>{
+                    const data = await fetch(`/blog/${blogId}`,{
+                        method:'DELETE'
+                    })
+                    const response  = await data.json()
+                    console.log("Deleted")
+                    console.log(response)
+                    if(response.ok){
+                        console.log('Blog deleted successfully',blogName)
+                        // location.assign(`/@${response.username}`)
+                        // later if mood changes to redirect or refresh
+                    }else{
+                        console.log("Server side Error")
+                    }
+                }
+                
+
+            </script>
+
+
+
+
+
+
+
+
+
+
+<!-- Implemented delete for user, now delete for user and both to admin -->
+
+
+
+
+
+
+
+
+
+
+
+

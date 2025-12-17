@@ -82,7 +82,12 @@ module.exports.logout_get = (req,res)=>{
     res.cookie('jwt',"",{maxAge:1})
     res.redirect('/')
 }
+//to be removed after development
 module.exports.users_get = async (req,res)=>{
     const users = await User.find()
     res.render("users",{users})
+}
+module.exports.admin_get = async (req,res) => {
+    console.log('in admin get controller')
+    res.render('admin')
 }

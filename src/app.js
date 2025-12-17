@@ -29,7 +29,7 @@ const blogRoutes = require("./routes/blogRoutes")
 app.use(blogRoutes)
 
 app.use('/:slug',(req,res,next)=>{
-    res.render('forbidden')
+    res.render('404notfound')
 }) 
 
 PORT = process.env.PORT || 3001

@@ -56,4 +56,4 @@ module.exports = mongoose.model('user',userSchema)
 
 
 
-//just added roles in documents, controller, middleware all pending
+//just added roles in documents............... controller, middleware all pending

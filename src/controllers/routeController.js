@@ -16,9 +16,9 @@ module.exports.getProfile = async (req,res)=>{
     const username = req.params.username
     const profile = await User.findOne({username})
     const blogs = await Blogs.find({author:profile._id}).populate('author')
-    console.log("********************************************")
-    console.log("in routecontroller...\n")
-    // console.log(profile.name) for debugging
+    // console.log("********************************************")
+    // console.log("in routecontroller...\n")
+    // console.log(profile.name)                  for debugging
     res.render('profile',{profile,blogs})
 }
 // module.exports.getUsers = (req,res)=>{

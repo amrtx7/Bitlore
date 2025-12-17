@@ -73,9 +73,24 @@ module.exports.postWriteBlogs = async (req,res)=>{
     }
 }
 module.exports.getBlog = async(req,res)=>{
-    console.log("in getblog controller\n")
+    // console.log("in getblog controller\n") for debugging
     const blogName = req.params.blogName
     const blog = await Blogs.findOne({slug:blogName}).populate('author')
     // console.log(blog) for debugging putpose
     res.render('blogPage' , {blog})
+}
+module.exports.deleteBlog = async (req,res)=>{
+    const blogID = req.params.id
+    try {
+        const blog = await Blogs.findOneAndDelete({_id:blogID}).populate('author')
+        console.log("Blog to be deleted -",blog.slug)
+        console.log("Blog by",blog.author.username)
+        return res.status(200).json({
+            ok:true,
+            username:blog.author.username
+        })
+        
+    } catch (err) {
+        console.log(err)
+    }
 }
