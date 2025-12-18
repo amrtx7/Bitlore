@@ -94,3 +94,13 @@ module.exports.deleteBlog = async (req,res)=>{
         console.log(err)
     }
 }
+module.exports.getEditBlog = async (req,res) => {
+    const id = req.params.id;
+    const blog = await Blogs.findOne({_id:id})
+    console.log("Jaa kr edit")
+    console.log(blog.title)
+    res.render('editBlog',{blog})
+}
+module.exports.putEditBlog = async(req,res) => {
+    console.log("hi")
+}

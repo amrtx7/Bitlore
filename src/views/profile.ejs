@@ -32,6 +32,10 @@
                                     </a>
                                     <button class="delBtn" data-blog-id="<%= blog._id %>"
                                         data-blog-name="<%= blog.title %>">Delete</button>
+                                    <button class="editBtn" data-blog-id="<%= blog._id %>"
+                                        data-blog-name="<%= blog.title %>"
+                                        data-blog-content="<%= blog.content %>"
+                                        >Edit</button>
 
                                 </li>
                                 <% }); %>
@@ -46,16 +50,25 @@
                 const blogList = document.querySelector('#blog-list')
                 if(blogList){
                     blogList.addEventListener('click',(event)=>{
+                        const blogId = event.target.dataset.blogId
+                        const blogName = event.target.dataset.blogName
+                        if(event.target.classList.contains('editBtn')){
+                            const title = event.target.dataset.blogId
+                            editBlog(blogId,blogName)
+                        }
                         if(!event.target.classList.contains('delBtn')){
                             return
                         }
-                        const blogId = event.target.dataset.blogId
-                        const blogName = event.target.dataset.blogName
-                        if(confirm('Do you want to delete this blog?')){
-                            deleteBlog(blogId,blogName)
-                            event.target.closest('li').remove()
-                        }
+                        else{
+                            if(confirm('Do you want to delete this blog?')){
+                                deleteBlog(blogId,blogName)
+                                event.target.closest('li').remove()
+                            }
+                        }   
                     })
+                }
+                const editBlog = async(blogId,blogName)=>{
+                    location.assign(`/blog/${blogId}/edit`)
                 }
 
                 const deleteBlog = async(blogId,blogName)=>{
@@ -86,7 +99,7 @@
 
 
 
-<!-- Implemented delete for user, now delete for user and both to admin -->
+<!-- Implemented delete for user, now update for user and both to admin -->
 
 
 

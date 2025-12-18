@@ -3,9 +3,9 @@
 <div class="main">
     <div class="blogForm">
         <form>
-            <input type="text" name="title" id="title" placeholder="Title* (Maximum length is 50 characters)">
+            <input type="text" name="title" id="title" value="<%= blog.title %>">
             <div class="error-text title-input-error"></div>
-            <textarea name="content" id="content" placeholder="Write your blog* (Maximum length is 500 characters)"></textarea>
+            <textarea name="content" id="content" ><%= blog.content %></textarea>
             <div class="error-text content-input-error"></div>
             <div class="common-error-box"></div>
             <input class="btn" type="submit" value="Post">
@@ -30,7 +30,7 @@
         const contentInput = document.querySelector("#content")//500
             
             try {
-                const response = await fetch('/<%= user._id %>/write', {
+                const response = await fetch('/blog/<%= blog._id%>/edit', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

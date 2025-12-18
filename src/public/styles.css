@@ -11,7 +11,10 @@ body,html{
     flex-direction: column;
     background-color: #fff;
 }
-
+.container{
+    width:90vw;
+    overflow:hidden;
+}
 
 nav{
     font-size: 14px;

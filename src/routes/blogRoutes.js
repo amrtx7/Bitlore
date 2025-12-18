@@ -9,6 +9,12 @@ router.get('/:userid/write',checkUser,requireAuth,protectedRoute,blogController.
 router.post('/:userid/write',checkUser,requireAuth,protectedRoute,blogController.postWriteBlogs)
 router.get('/blogs/:blogName',checkUser,requireAuth,blogController.getBlog)
 router.delete('/blog/:id',requireAuth,checkUser,blogController.deleteBlog)
+router.get('/blog/:id/edit',requireAuth,checkUser,blogController.getEditBlog)
+router.put('/blog/:id/edit',requireAuth,checkUser,blogController.putEditBlog)
 // router.use('/:slug',protectedRoute)
 
 module.exports = router
+
+
+
+//implement put request in blogcontroller
