@@ -27,15 +27,17 @@
                                         <%= blog.content %>
                                     </p>
                                     <a id="author" href="/author/<%= blog.author.id %>">
-                                        <%= blog.author.name %> | <%=
-                                                blog.createdAt.toString().split(" ").slice(1,4).join(" -") %>
+                                        <%= blog.createdAt.toString().split(" ").slice(1,4).join(" ") %>
                                     </a>
-                                    <button class="delBtn" data-blog-id="<%= blog._id %>"
-                                        data-blog-name="<%= blog.title %>">Delete</button>
-                                    <button class="editBtn" data-blog-id="<%= blog._id %>"
-                                        data-blog-name="<%= blog.title %>"
-                                        data-blog-content="<%= blog.content %>"
-                                        >Edit</button>
+                                    <% if (isUser) { %>
+                                     
+                                        <button class="delBtn" data-blog-id="<%= blog._id %>"
+                                            data-blog-name="<%= blog.title %>">Delete</button>
+                                        <button class="editBtn" data-blog-id="<%= blog._id %>"
+                                            data-blog-name="<%= blog.title %>"
+                                            data-blog-content="<%= blog.content %>"
+                                            >Edit</button>
+                                    <% } %>
 
                                 </li>
                                 <% }); %>
