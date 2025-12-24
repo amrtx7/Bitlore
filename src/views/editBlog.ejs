@@ -8,7 +8,8 @@
             <textarea name="content" id="content" ><%= blog.content %></textarea>
             <div class="error-text content-input-error"></div>
             <div class="common-error-box"></div>
-            <input class="btn" type="submit" value="Post">
+            <input class="btn edit-btn" type="submit" value="Update">
+            <button class="btn"><a href="/@<%= blog.author.username %>">Cancel</a></button>
         </form>
     </div>
 </div>
@@ -26,12 +27,12 @@
     
     form.addEventListener('submit', async (e)=>{
         e.preventDefault()
-        const titleInput = document.querySelector("#title")//50
+        const titleInput = document.querySelector("#title")//100
         const contentInput = document.querySelector("#content")//500
             
             try {
                 const response = await fetch('/blog/<%= blog._id%>/edit', {
-                    method: 'POST',
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
@@ -44,8 +45,8 @@
                 console.log(data)
                 if (data.success) {
                     // Handle successful submission
-                    alert('Blog posted successfully!');
-                    location.assign('/')
+                    alert(data.message);
+                    location.assign('/@<%= blog.author.username%>')
                 } else {
                     // Handle server errors
                     errorBox.innerHTML = data.errors.empty;

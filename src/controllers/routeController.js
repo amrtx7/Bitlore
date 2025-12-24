@@ -15,7 +15,7 @@ module.exports.getContacts = (req,res)=>{
 module.exports.getProfile = async (req,res)=>{
     const username = req.params.username
     const profile = await User.findOne({username})
-    const blogs = await Blogs.find({author:profile._id}).populate('author')
+    const blogs = await Blogs.find({author:profile._id}).sort({createdAt:-1}).populate('author')
     let isUser = true
     if(username !== res.locals.user.username) isUser = false 
     res.render('profile',{profile,blogs,isUser})

@@ -83,8 +83,6 @@ module.exports.deleteBlog = async (req,res)=>{
     const blogID = req.params.id
     try {
         const blog = await Blogs.findOneAndDelete({_id:blogID}).populate('author')
-        console.log("Blog to be deleted -",blog.slug)
-        console.log("Blog by",blog.author.username)
         return res.status(200).json({
             ok:true,
             username:blog.author.username
@@ -96,11 +94,55 @@ module.exports.deleteBlog = async (req,res)=>{
 }
 module.exports.getEditBlog = async (req,res) => {
     const id = req.params.id;
-    const blog = await Blogs.findOne({_id:id})
-    console.log("Jaa kr edit")
-    console.log(blog.title)
+    const blog = await Blogs.findOne({_id:id}).populate('author')
     res.render('editBlog',{blog})
 }
 module.exports.putEditBlog = async(req,res) => {
-    console.log("hi")
+    console.log("In puteditblog controller")
+    try {
+        const user = res.locals.user
+        const {title, content} = req.body
+
+        if(!title || !content){
+            throw {
+                user:user.name,
+                reason:"empty"
+            }
+        }
+        if(title.length>100){
+            throw{
+                user:user.name,
+                limitExceeded:true,
+                title:true,
+                content:false
+            }
+        }
+        if(content.length>1000){
+            throw{
+                user:user.name,
+                limitExceeded:true,
+                title:false,
+                content:true
+            }
+        }
+        const blog = await Blogs.findOneAndUpdate(
+            {_id : req.params.id},
+            {$set : {
+                title: title.trim(),
+                content: content.trim(),
+                author: user._id,
+                slug:""
+            }
+            },
+            {new : true}
+        )
+        
+        res.status(201).json({ 
+            success: true, 
+            message: 'Blog updated successfully!'
+        })
+    } catch (err) {
+        console.error('Error updating blog:', err,"\n")
+        handleBlogErrors(res,err)
+    }
 }

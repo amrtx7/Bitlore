@@ -13,3 +13,4 @@ router.get('/@:username',checkUser,requireAuth,routeController.getProfile)
 
 
 module.exports = router
+
