@@ -33,6 +33,10 @@ blogSchema.pre('save',function(){
     let n = generateRandomNumber(10000,99999);
     this.slug = slugify(this.title,{lower:true})+ `-${n}`;
 })
+blogSchema.pre('findOneAndUpdate',function(){
+    let n = generateRandomNumber(10000,99999);
+    this.getUpdate().$set.slug = slugify(this.getUpdate().$set.title,{lower:true})+ `-${n}`;
+})
 
 const Blogs = mongoose.model('blogs',blogSchema)    
 module.exports = Blogs

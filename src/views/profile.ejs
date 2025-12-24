@@ -26,9 +26,9 @@
                                     <p id="desc">
                                         <%= blog.content %>
                                     </p>
-                                    <a id="author" href="/author/<%= blog.author.id %>">
+                                    <p>
                                         <%= blog.createdAt.toString().split(" ").slice(1,4).join(" ") %>
-                                    </a>
+                                    </p>
                                     <% if (isUser) { %>
                                      
                                         <button class="delBtn" data-blog-id="<%= blog._id %>"
@@ -55,8 +55,9 @@
                         const blogId = event.target.dataset.blogId
                         const blogName = event.target.dataset.blogName
                         if(event.target.classList.contains('editBtn')){
-                            const title = event.target.dataset.blogId
+                            // const title = event.target.dataset.blogId
                             editBlog(blogId,blogName)
+                            return
                         }
                         if(!event.target.classList.contains('delBtn')){
                             return
