@@ -140,3 +140,44 @@ footer{
     text-align: center;
     padding:10px;
 }
+
+/* ============ MAIN PAGE ============== */
+.main-layout .main{
+    display: flex;
+    /* flex:1; */
+    justify-content: center;
+    text-align: center;
+    background-color:#ffffff;
+}
+.main-layout .main .container{
+    display:flex;
+    flex-wrap: wrap;
+    width:min(550px,90vw)
+}
+.blogs{
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+    gap:20px;
+}
+.blog-card{
+    border:none;
+    margin:9px 0;
+    padding:10px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+    gap:5px;
+    align-items:flex-start;
+}
+.blog-card #title{
+    font-size: 30px;
+    font-weight: 700;
+}
+.blog-card #desc{
+    color:rgb(64, 64, 64);
+}
+.blog-card #author{
+    font-size: 12px;
+    font-weight: 400;
+}
