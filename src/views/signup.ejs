@@ -1,9 +1,10 @@
 <%- include('partials/header') %>
+<body class="signup-layout">
 <%- include('partials/nav') %>
         <div class="main">
             <div class="container">
                 <form>
-                    <p>New to MyBlogs?</p>
+                    <p>New to BitLore?</p>
                     <p>Register yourself</p>
                     <input type="text" name="username" placeholder="username">
                     <div class="error username-error"></div>
@@ -14,14 +15,15 @@
                     <input type="text" name="password" placeholder="password">
                     <div class="error password-error"></div>
                     <input type="submit" value="Sign Up">
+                    <p>Already have an account? <a href="/auth/login">Login</a></p>
                 </form>
             </div>
         </div>
 <%- include('partials/footer') %>
 <script>
-
+    
     const form = document.querySelector("form")
-
+    
     form.addEventListener('submit',async (e)=>{
         e.preventDefault()
         const username = form.username.value
@@ -33,7 +35,7 @@
         const emailErr = document.querySelector(".error.email-error")
         const passwordErr = document.querySelector(".error.password-error")
         try {
-
+            
             const user = await fetch('/auth/signup',{
                 method:'POST',
                 headers:{"Content-Type":"application/json"},
@@ -56,3 +58,4 @@
         }
     })
 </script>
+    </body>

@@ -1,68 +1,85 @@
 <%- include('partials/header') %>
-<%- include('partials/nav') %>
-<div class="main">
-    <div class="blogForm">
-        <form>
-            <input type="text" name="title" id="title" placeholder="Title* (Maximum length is 50 characters)">
-            <div class="error-text title-input-error"></div>
-            <textarea name="content" id="content" placeholder="Write your blog* (Maximum length is 500 characters)"></textarea>
-            <div class="error-text content-input-error"></div>
-            <div class="common-error-box"></div>
-            <input class="btn" type="submit" value="Post">
-        </form>
+<body class="writeBlog-layout">
+    <%- include('partials/nav') %>
+    
+    <div class="main">
+        <div class="blogForm">
+            <form>
+                <textarea id="title" name="title" placeholder="Title here"></textarea>
+                <div class="error-text title-input-error"></div>
+                <textarea id="content" name="content" placeholder="Write"></textarea>
+                <div class="error-text content-input-error"></div>
+                <div class="common-error-box"></div>
+               <button type="submit" class="btn">Post</button>
+
+            </form>
+        </div>
     </div>
-</div>
-
-<%- include('partials/footer') %>
-
-<script>
-    const form = document.querySelector("form")
-    const titleInputError = document.querySelector(".title-input-error")
+    
+    <%- include('partials/footer') %>
+    
+    <script>
+        const form = document.querySelector("form")
+        const titleInputError = document.querySelector(".title-input-error")
     titleInputError.style.color = 'red'
     const contentInputError = document.querySelector(".content-input-error")
     contentInputError.style.color = 'red'
     const errorBox = document.querySelector(".common-error-box")
     errorBox.style.color = 'red'
     
+    const titlearea = document.querySelector("#title")
+    const contentarea = document.querySelector("#content")
+    titlearea.addEventListener('input',(e)=>{
+        titlearea.style.height = "auto"
+        titlearea.style.height = titlearea.scrollHeight + "px"
+    })
+    contentarea.addEventListener('input',(e)=>{
+        contentarea.style.height = "auto"
+        contentarea.style.height = contentarea.scrollHeight + "px"
+    })
+    
     form.addEventListener('submit', async (e)=>{
         e.preventDefault()
         const titleInput = document.querySelector("#title")//50
         const contentInput = document.querySelector("#content")//500
-            
-            try {
-                const response = await fetch('/<%= user._id %>/write', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        title: titleInput.value.trim(),
-                        content: contentInput.value.trim()
-                    })
-                });
-                const data = await response.json()
+        
+        try {
+            const response = await fetch('/<%= user._id %>/write', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: titleInput.value.trim(),
+                    content: contentInput.value.trim()
+                })
+            });
+            const data = await response.json()
+            console.log(data)
+            if (data.success) {
+                // Handle successful submission
+                alert('Blog posted successfully!');
+                location.assign('/')
+            } else {
+                // Handle server errors
+                errorBox.innerHTML = data.errors.empty;
+                 // No need as the limit is removed.
+                    // titleInputError.innerHTML = data.errors.limit.title;
+                    // contentInputError.innerHTML = data.errors.limit.content;
                 console.log(data)
-                if (data.success) {
-                    // Handle successful submission
-                    alert('Blog posted successfully!');
-                    location.assign('/')
-                } else {
-                    // Handle server errors
-                    errorBox.innerHTML = data.errors.empty;
-                    titleInputError.innerHTML = data.errors.limit.title;
-                    contentInputError.innerHTML = data.errors.limit.content;
-                    console.log(data)
-                }
-            } catch (err) {
-                console.error('Error posting blog:', err);
-                // alert('An error occurred while posting the blog.');
             }
-
-
-
-
+        } catch (err) {
+            console.error('Error posting blog:', err);
+            // alert('An error occurred while posting the blog.');
+        }
+        
+        
+        
+        
     })
-
-
-
+    
+    
+    
 </script>
+
+</body>

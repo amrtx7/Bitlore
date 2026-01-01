@@ -1,4 +1,5 @@
 const User = require("../models/user")
+const Blog = require("../models/blogs")
 const jwt = require("jsonwebtoken")
 const bcrypt = require("bcrypt")
 const { isEmail } = require('validator')
@@ -89,5 +90,8 @@ module.exports.users_get = async (req,res)=>{
 }
 module.exports.admin_get = async (req,res) => {
     console.log('in admin get controller')
-    res.render('admin')
+    const blogs = await Blog.find().sort({createdAt:-1}).populate('author')
+    const users = await User.find()
+    res.render('admin',{blogs,users})
+
 }
