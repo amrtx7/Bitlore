@@ -29,8 +29,12 @@ const userSchema = new mongoose.Schema({
         type:String,
         enum:["user","admin"],
         default:"user"
+    },
+    blogs:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:"blogs",
     }
-})
+},{timestamps:true})
 
 userSchema.pre("save",async function(){
     const salt = await bcrypt.genSalt()

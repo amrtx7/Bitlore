@@ -1,24 +1,25 @@
 
     <nav>
     <ul>
-        <li><h2><a href="/"><b><i><u>BitLore</u></i></b></a></h2></li>
-        <li><a href="/">Home</a></li>
-        <li><a href="/<%= user._id %>/write">Write</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contacts">Contact</a></li>
+        <li><a class="bitlore" href="/"><img src="/logo.png" alt="bitlore" width="80px"></a></li>
+        <li><a class="nav-link" href="/">Home</a></li>
+
+        <!-- <li><a href="/about">About</a></li> -->
         <% if (user) { %>
-            <li><a href="/@<%= user.username %>">Profile</a></li>
-        <% }if(user && user.role === "admin") {%>
-            <li><a href="/admin %>">Admin</a></li>
-        <% } %>
+            <li><a class="nav-link" href="/<%= user._id %>/write">Write</a></li>
+            <li><a class="nav-link" href="/@<%= user.username %>"><%= user.name %></a></li>
+            <% }if(user && user.role === "admin") {%>
+                <li><a class="nav-link" href="/admin %>">Admin</a></li>
+                <% } %>
+                <li><a class="nav-link" href="/contacts">Contact</a></li>
     </ul>
     <ul>
         
         <% if (user) { %>
-            <li><a href="/auth/logout">Logout</a></li>
+            <li><a class="nav-link" href="/auth/logout">Logout</a></li>
             <% } else {%>
-                <li><a href="/auth/signup">Sign Up</a></li>
-                <li><a href="/auth/login">Log In</a></li>
+                <li><a class="signup-btn" href="/auth/signup">Sign Up</a></li>
+                <li><a class="login-btn" href="/auth/login">Log In</a></li>
         <%} %>
          
     </ul>

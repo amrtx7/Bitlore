@@ -1,12 +1,78 @@
 <%- include('partials/header') %>
-<%- include('partials/nav') %>
-
-
- <div class="main">
-            <div class="container">
-
-                <h1>Admin dashboard</h1>
+<body class="admin-page-layout">
+    
+    <%- include('partials/nav') %>
+    
+    
+    <div class="main">
+            <div class="admin-profile">
+                <p id="greetings">Bienvenido, Admin</p>
+                <p id="stat-title">BitLore Stats</p>
+                <div class="stats">
+                    <p>Total Users : <span><strong><%= users.length %></strong></span></p>
+                    <p>Total Blogs : <span><strong><%= blogs.length %></strong></span></p>
+                </div>
             </div>
-        </div>
 
-<%- include('partials/footer') %>
+            <div class="latest">
+                <div class="user">
+                    <p>Latest User</p>
+                    <a href="/@<%= users[Object.keys(users)[0]].username %>"><%= users[Object.keys(users)[0]].username  %></a>
+                </div>
+                <div class="blog">
+                    <p>Latest Blog</p>
+                    <a href="/blogs/<%= blogs[Object.keys(blogs)[0]].slug %>"><%= blogs[Object.keys(blogs)[0]].title  %></a>
+                </div>
+            </div>
+
+            <div class="dashboard">
+                <div class="buttons">
+                    <button class="users-btn">Users</button>
+                    <button class="blogs-btn">Blogs</button>
+                    <div class="list">
+                        <ul>
+
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+    </div>
+    
+    <%- include('partials/footer') %>
+    <script>
+        const usersBtn = document.querySelector(".users-btn");
+        const blogsBtn = document.querySelector(".blogs-btn");
+        const users = <%- JSON.stringify(users) %>;
+        const blogs = <%- JSON.stringify(blogs) %>;
+        const ul = document.querySelector(".list ul");
+        
+        usersBtn.addEventListener('click', (e) => {
+            ul.innerHTML = "";
+            users.forEach(user => {
+                const li = document.createElement('li')
+                li.classList.add = "user-card"
+                const a = document.createElement("a")
+                a.href= `/@${user.username}`
+                a.innerHTML = user.username
+                li.appendChild(a)
+                ul.appendChild(li)
+            });
+        })
+
+        blogsBtn.addEventListener('click', (e) => {
+            ul.innerHTML = "";
+            blogs.forEach(blog => {
+                const li = document.createElement('li')
+                li.classList.add = "blog-card"
+                const a = document.createElement("a")
+                a.href= `/blogs/${blog.slug}`
+                a.innerHTML = blog.title
+                li.appendChild(a)
+                ul.appendChild(li)
+            });
+        })
+        
+
+    </script>
+</body>

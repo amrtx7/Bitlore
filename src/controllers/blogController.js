@@ -3,13 +3,6 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const { handleBlogErrors } = require('../utils/handleErrors')
 
-module.exports.getUserBlogs = async (req,res)=>{
-    const userId = res.locals.user._id.toString()
-    const blogs = await Blogs.find({ author:userId }).sort({createdAt:-1}).populate('author')
-    // console.log("User blogs\n")   for debugging purpose
-    // console.log(blogs)
-    res.render("blogs",{blogs})
-}
 
 module.exports.getWriteBlogs = (req,res)=>{
     res.render("writeBlogs")
@@ -26,26 +19,8 @@ module.exports.postWriteBlogs = async (req,res)=>{
                 reason:"empty"
             }
         }
-        if(title.length>100){
-            throw{
-                user:user.name,
-                limitExceeded:true,
-                title:true,
-                content:false
-            }
-        }
-        if(content.length>1000){
-            throw{
-                user:user.name,
-                limitExceeded:true,
-                title:false,
-                content:true
-            }
-        }
         
         // Get authenticated user from res.locals (set by checkUser middleware)
-
-        // console.log("blog by : ",user.name,"\n"); for debugging purpose
         const userId = req.params.userid
         if(userId !== user._id.toString()){
             throw {
@@ -80,8 +55,9 @@ module.exports.getBlog = async(req,res)=>{
     res.render('blogPage' , {blog})
 }
 module.exports.deleteBlog = async (req,res)=>{
-    const blogID = req.params.id
+    const blogID = req.params.blogid
     try {
+        console.log("in delete prakriya")
         const blog = await Blogs.findOneAndDelete({_id:blogID}).populate('author')
         return res.status(200).json({
             ok:true,
@@ -89,18 +65,22 @@ module.exports.deleteBlog = async (req,res)=>{
         })
         
     } catch (err) {
+        console.log("nhihua delete prakriya")
         console.log(err)
     }
 }
 module.exports.getEditBlog = async (req,res) => {
-    const id = req.params.id;
+    const id = req.params.blogid;
     const blog = await Blogs.findOne({_id:id}).populate('author')
     res.render('editBlog',{blog})
 }
 module.exports.putEditBlog = async(req,res) => {
     console.log("In puteditblog controller")
     try {
-        const user = res.locals.user
+        let blog = await Blogs.findOne({_id:req.params.blogid}).populate('author')
+        console.log(blog)
+        const user = blog.author
+        console.log("user",user)
         const {title, content} = req.body
 
         if(!title || !content){
@@ -109,24 +89,8 @@ module.exports.putEditBlog = async(req,res) => {
                 reason:"empty"
             }
         }
-        if(title.length>100){
-            throw{
-                user:user.name,
-                limitExceeded:true,
-                title:true,
-                content:false
-            }
-        }
-        if(content.length>1000){
-            throw{
-                user:user.name,
-                limitExceeded:true,
-                title:false,
-                content:true
-            }
-        }
-        const blog = await Blogs.findOneAndUpdate(
-            {_id : req.params.id},
+        blog = await Blogs.findOneAndUpdate(
+            {_id : blog._id},
             {$set : {
                 title: title.trim(),
                 content: content.trim(),

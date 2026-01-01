@@ -1,12 +1,30 @@
 <%- include('partials/header') %>
-<%- include('partials/nav') %>
-
- <div class="main">
-            <div class="container">
-
-                
-                <h1>Sorry! no contacts</h1>
+<body class="contact-page-layout">
+    <%- include('partials/nav') %>
+    
+    <div class="main">
+        <div class="container">
+            <div class="about-bitlore">
+                <p class="heading">About <img src="/logo.png" alt="BITLORE" width="100px;"></p>
+                <p class="desc">✦ BitLore is a calm space for your thoughts.
+                    Write freely, share stories, and explore ideas without noise or distractions.
+                    Whether it’s a quick thought or a long story, BitLore gives your words a place to live.</p>
+                <p class="desc">✦ BitLore currently supports plain-text writing to keep the focus on ideas, not formatting.</p>
+            </div>
+            <div class="contact">
+                <p class="title">Get in touch!</p>
+                <p class="desc">Have feedback, questions, or ideas to improve BitLore?</p>
+                <form>
+                    <input type="text" name="name" placeholder="Full name">
+                    <div class="error name-error"></div>
+                    <input type="text" name="email" placeholder="Email">
+                    <div class="error email-error"></div>
+                    <textarea name="message" id="message" rows="7" placeholder="Message"></textarea>
+                    <input type="submit" value="Send">
+                </form>
             </div>
         </div>
-
-<%- include('partials/footer') %>
+    </div>
+    
+    <%- include('partials/footer') %>
+</body>
