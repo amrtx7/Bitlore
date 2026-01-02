@@ -4,6 +4,13 @@
     
     <div class="main">
         <div class="container">
+            <dialog>
+                <div class="modal">
+                    <p>This feature will be available soon</p>
+                    <button class="close-btn">Close</button>
+                </div>
+            </dialog>
+            
             <div class="about-bitlore">
                 <p class="heading">About <img src="/logo.png" alt="BITLORE" width="100px;"></p>
                 <p class="desc">✦ BitLore is a calm space for your thoughts.
@@ -22,9 +29,24 @@
                     <textarea name="message" id="message" rows="7" placeholder="Message"></textarea>
                     <input type="submit" value="Send">
                 </form>
+                
             </div>
+            
         </div>
     </div>
     
     <%- include('partials/footer') %>
+    <script>
+        const modal = document.querySelector("dialog")
+        const openButton = document.querySelector("form input[type='submit']")
+        const closeButton = document.querySelector("dialog .close-btn")
+        
+        openButton.addEventListener("click",(e)=>{
+            e.preventDefault()
+            modal.showModal()
+        })
+        closeButton.addEventListener("click",()=>{
+            modal.close()
+        })
+    </script>
 </body>
