@@ -37,9 +37,24 @@ const userSchema = new mongoose.Schema({
 },{timestamps:true})
 
 userSchema.pre("save",async function(){
-    const salt = await bcrypt.genSalt()
-    const hash = await bcrypt.hash(this.password,salt)
-    this.password = hash; 
+    // Hash password if it's modified or new
+    if(this.isModified('password') || this.isNew){
+        const salt = await bcrypt.genSalt()
+        const hash = await bcrypt.hash(this.password,salt)
+        this.password = hash; 
+    }
+    
+    //admin role based on email for new users (if role is default "user")
+    if(this.isNew && this.role === "user"){
+        const adminEmails = process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL
+        if (adminEmails) {
+            const adminEmailList = adminEmails.split(',').map(email => email.trim().toLowerCase())
+            if (adminEmailList.includes(this.email.toLowerCase())) {
+                this.role = "admin"
+                console.log(`Admin role assigned to: ${this.email}`)
+            }
+        }
+    }
 })
 
 module.exports = mongoose.model('user',userSchema)
