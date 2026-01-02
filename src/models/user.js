@@ -44,16 +44,18 @@ userSchema.pre("save",async function(){
         this.password = hash; 
     }
     
-    //admin role based on email for new users (if role is default "user")
-    if(this.isNew && this.role === "user"){
+    // Assign admin role based on email for new users
+    if(this.isNew){
         const adminEmails = process.env.ADMIN_EMAILS || process.env.ADMIN_EMAIL
+        console.log('User email:', this.email)
         if (adminEmails) {
             const adminEmailList = adminEmails.split(',').map(email => email.trim().toLowerCase())
             if (adminEmailList.includes(this.email.toLowerCase())) {
                 this.role = "admin"
                 console.log(`Admin role assigned to: ${this.email}`)
             }
-        }
+        } else {
+            console.log(`User role assigned to: ${this.email}`)}
     }
 })
 
