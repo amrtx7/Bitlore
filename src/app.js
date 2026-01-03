@@ -4,8 +4,6 @@ const dotenv = require('dotenv')
 dotenv.config()
 const cookieParser = require('cookie-parser')
 
-const dbConnect = require('./config/dbConnection')
-dbConnect()
 
 const path = require("path")
 app.set('view engine','ejs')
@@ -34,6 +32,20 @@ app.use('/:slug',(req,res,next)=>{
 
 PORT = process.env.PORT || 3001
 
-app.listen(process.env.PORT,()=>{
-    console.log("Server is running at port",process.env.PORT)
-})
+const dbConnect = require("./config/dbConnection");
+
+const startServer = async () => {
+  try {
+    await dbConnect();
+
+    app.listen(process.env.PORT,()=>{
+        console.log("Server is running at port",process.env.PORT)
+    })
+
+  } catch (err) {
+    console.error("Server not started due to DB error");
+    process.exit(1);
+  }
+};
+
+startServer();
